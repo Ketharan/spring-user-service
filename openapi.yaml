@@ -13,8 +13,21 @@ paths:
         '200':
           description: Successful response
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "cnb"
+                  age:
+                    type: integer
+                    example: 29
+                  company:
+                    type: string
+                    example: "Mat logic"
+                  occupation:
+                    type: string
+                    example: "Lawyer"
       deprecated: false
       security: []
