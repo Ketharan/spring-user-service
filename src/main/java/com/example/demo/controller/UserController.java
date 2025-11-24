@@ -29,13 +29,14 @@ public class UserController {
             throw new RuntimeException("Simulated error");
         }
 
-        return new UserResponse(
-                userProperties.getName(),
-                userProperties.getAge(),
-                userProperties.getCompany(),
-                userProperties.getOccupation(),
-                userProperties.getPseudoName(),
-                userProperties.getPassword()
-        );
+        UserResponse response = new UserResponse();
+        response.setName(userProperties.getName());
+        response.setAge(userProperties.getAge());
+        response.setCompany(userProperties.getCompany());
+        response.setOccupation(userProperties.getOccupation());
+        response.setPseudoName(userProperties.getPseudoName());
+        response.setPassword(userProperties.getPassword());
+
+        return response;
     }
 }
