@@ -33,7 +33,9 @@ public class UserController {
                 userProperties.getName(),
                 userProperties.getAge(),
                 userProperties.getCompany(),
-                userProperties.getOccupation()
+                userProperties.getOccupation(),
+                userProperties.getPseudoName(),
+                userProperties.getPassword()
         );
     }
 }

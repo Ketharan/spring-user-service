@@ -12,15 +12,54 @@ public class UserProperties {
     private String company;
     private String occupation;
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    private String pseudoName;  // from environment variable
+    private String password;    // from secret
 
-    public int getAge() { return age; }
-    public void setAge(int age) { this.age = age; }
+    public String getName() {
+        return name;
+    }
 
-    public String getCompany() { return company; }
-    public void setCompany(String company) { this.company = company; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getOccupation() { return occupation; }
-    public void setOccupation(String occupation) { this.occupation = occupation; }
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+
+    public String getPseudoName() {
+        return pseudoName;
+    }
+
+    public void setPseudoName(String pseudoName) {
+        this.pseudoName = pseudoName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

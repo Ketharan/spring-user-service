@@ -6,16 +6,50 @@ public class UserResponse {
     private int age;
     private String company;
     private String occupation;
+    private String pseudoName; 
+    private String password;   // ✅ added
 
-    public UserResponse(String name, int age, String company, String occupation) {
+    // Getters & Setters
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+    public void setCompany(String company) {
         this.company = company;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+    public void setOccupation(String occupation) {
         this.occupation = occupation;
     }
 
-    public String getName() { return name; }
-    public int getAge() { return age; }
-    public String getCompany() { return company; }
-    public String getOccupation() { return occupation; }
+    public String getPseudoName() {
+        return pseudoName;
+    }
+    public void setPseudoName(String pseudoName) {
+        this.pseudoName = pseudoName;
+    }
+
+    public String getPassword() {    // ✅ added
+        return password;
+    }
+    public void setPassword(String password) {  // ✅ added
+        this.password = password;
+    }
 }
