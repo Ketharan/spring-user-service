@@ -1,0 +1,33 @@
+name: Build & Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Azure DevOps Container Registry
+        run: |
+          echo "$AZURE_DEVOPS_PAT" | docker login ${{ secrets.AZURE_DEVOPS_REGISTRY }} \
+            --username ${{ secrets.AZURE_DEVOPS_USERNAME }} --password-stdin
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.AZURE_DEVOPS_REGISTRY }}/${{ secrets.AZURE_DEVOPS_IMAGE_NAME }}:${{ github.sha }} .
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.AZURE_DEVOPS_REGISTRY }}/${{ secrets.AZURE_DEVOPS_IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Print image details
+        run: |
+          echo "Image pushed to:"
+          echo "${{ secrets.AZURE_DEVOPS_REGISTRY }}/${{ secrets.AZURE_DEVOPS_IMAGE_NAME }}:${{ github.sha }}"
