@@ -3,7 +3,7 @@ name: Build & Push Docker Image (Docker Hub)
 on:
   push:
     branches:
-      - main
+      - "**"
   workflow_dispatch:
 
 jobs:
@@ -14,6 +14,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set branch name
+        id: vars
+        run: |
+          # Extract branch name safely
+          BRANCH_NAME="${GITHUB_REF##*/}"
+
+          # Convert slashes to dashes (Docker tag safe)
+          SAFE_BRANCH=$(echo "$BRANCH_NAME" | tr '/' '-')
+
+          echo "branch=$SAFE_BRANCH" >> $GITHUB_OUTPUT
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
       - name: Login to Docker Hub
         run: |
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login \
@@ -21,13 +33,19 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_REPO }}:${{ github.sha }} .
+          IMAGE_TAG="${{ secrets.DOCKERHUB_REPO }}:${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }}"
+          echo "Building image: $IMAGE_TAG"
+
+          docker build -t "$IMAGE_TAG" .
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.DOCKERHUB_REPO }}:${{ github.sha }}
+          IMAGE_TAG="${{ secrets.DOCKERHUB_REPO }}:${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }}"
+          echo "Pushing image: $IMAGE_TAG"
+
+          docker push "$IMAGE_TAG"
 
       - name: Print pushed image
         run: |
-          echo "Image pushed to:"
-          echo "${{ secrets.DOCKERHUB_REPO }}:${{ github.sha }}"
+          echo "Image pushed successfully:"
+          echo "${{ secrets.DOCKERHUB_REPO }}:${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }}"
